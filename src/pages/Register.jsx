@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { TERipple } from "tw-elements-react";
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const Register = () => {
     const [formData, setFormData] = useState({
         username: '',
@@ -9,6 +13,7 @@ const Register = () => {
         password: '',
         confirm_password: ''
     });
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({
@@ -17,10 +22,46 @@ const Register = () => {
         });
     };
 
-    const handleRgistration = (event) => {
+    const handleRegistration = (event) => {
         event.preventDefault();
-        // Add your form validation or submission logic here
-        console.log(formData);
+        const { username, first_name, last_name, email, password, confirm_password } = formData;
+    
+        if (!username || !first_name || !last_name || !email || !password || !confirm_password) {
+            toast.warning('Please fill out all fields.');
+            return;
+        }
+    
+        if (password !== confirm_password) {
+            toast.error('Passwords do not match.');
+            return;
+        }
+    
+        try {
+            fetch("http://127.0.0.1:8000/user/register/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            })
+                .then((response) => {
+                    if (response.status === 200) {
+                        toast.success("Registration Successful.");
+                        // window.location.href = "";  // Redirect or perform other actions
+                        navigate('/login');
+                    } else {
+                        console.log("Registration failed with status code:", response.status);
+                        toast.error(response.statusText);
+                    }
+                })
+                .catch((error) => {
+                    console.log("Error during registration:", error);
+                    toast.error("An error occurred during registration.");
+                });
+        } catch (err) {
+            console.log(err);
+            toast.error("An unexpected error occurred.");
+        }
     };
     return (
         <>
@@ -37,7 +78,7 @@ const Register = () => {
                         </div>
 
                         <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
-                        <form>
+                            <form>
                                 <div className="mb-4">
                                     <label className="block text-sm font-medium mb-1" htmlFor="username">Username</label>
 
@@ -114,26 +155,20 @@ const Register = () => {
                                         required
                                     />
                                 </div>
+                                <button onClick={handleRegistration}
+                                    type="button"
+                                    className="inline-block w-full rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                                >
+                                    Register
+                                </button>
 
 
-
-
-                                {/* <!-- Submit button --> */}
-
-                                <TERipple onClick={handleRgistration} rippleColor="light" className="w-full">
-                                    <button
-                                        type="button"
-                                        className="inline-block w-full rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-                                    >
-                                        Register
-                                    </button>
-                                </TERipple>
-
-
-                            </form>                        </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </section>
+            <ToastContainer />
         </>
     );
 };
