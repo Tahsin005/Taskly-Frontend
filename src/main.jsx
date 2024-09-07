@@ -8,15 +8,21 @@ import {
 } from "react-router-dom";
 import HomePage from './pages/HomePage.jsx';
 import Register from './pages/Register.jsx';
+import Dashboard from './pages/Dashboard.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App></App>,
+    errorElement: <h1>Opps there seem to be an error</h1>,
     children: [
       {
         path: '/',
         element: <HomePage></HomePage>
+      },
+      {
+        path: '/tasks',
+        element: <Dashboard></Dashboard>
       },
       {
         path: '/register',
