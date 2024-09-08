@@ -48,7 +48,9 @@ const Register = () => {
                     if (response.status === 200) {
                         toast.success("Registration Successful.");
                         // window.location.href = "";  // Redirect or perform other actions
-                        navigate('/login');
+                        setTimeout(() => {
+                            navigate('/login');
+                        }, 3000);
                     } else {
                         console.log("Registration failed with status code:", response.status);
                         toast.error(response.statusText);
