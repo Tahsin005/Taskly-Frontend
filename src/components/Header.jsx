@@ -1,11 +1,35 @@
 import { Link } from "react-router-dom";
-
+import { isAuthenticated } from "../utils/authCheck";
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Header = () => {
+    const is_Authenticated = isAuthenticated();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        const token = localStorage.getItem("task_manager_token");
+
+        if (!token) {
+            alert("No token found. Already logged out.");
+            return;
+        }
+        localStorage.removeItem('task_manager_token');
+        localStorage.removeItem('task_manager_user_id');
+        localStorage.removeItem('task_manager_user_account');
+        
+        setTimeout(() => {
+            toast.success('Logged Out Successfully');
+        }, 3000);
+
+        navigate('/login');
+       
+    };
     return (
         <div className="max-w-screen-xl mx-auto ">
             <div className="navbar bg-base-100">
                 <div className="navbar-start">
-                    <div className="dropdown">
+                    <div className="dropdown ">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +46,7 @@ const Header = () => {
                         </div>
                         <ul
                             tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                            className="bg-[#9FE88D] menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow text-black text-l font-semibold">
                             <li><Link to={'/tasks'}>My Tasks</Link></li>
                         </ul>
                     </div>
@@ -34,9 +58,13 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <Link to={'/register'} className="btn btn-ghost font-bold">Register</Link>
+                    {
+                        !is_Authenticated ? <Link to={'/register'} className="btn btn-ghost bg-[#9FE88D] font-bold text-black">Register</Link> :
+                            <button onClick={handleLogout} type="submit" className="btn btn-ghost bg-[#9FE88D] font-bold text-black">Logout</button>
+                    }
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };

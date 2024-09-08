@@ -10,6 +10,7 @@ import HomePage from './pages/HomePage.jsx';
 import Register from './pages/Register.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Login from './pages/Login';
+import PrivateRoute from './components/PrivateRoute.jsx';
 
 const router = createBrowserRouter([
   {
@@ -27,11 +28,19 @@ const router = createBrowserRouter([
       },
       {
         path: '/register',
-        element: <Register></Register>
+        element: (
+          <PrivateRoute>
+            <Register></Register>
+          </PrivateRoute>
+        )
       },
       {
         path: '/login',
-        element: <Login></Login>
+        element: (
+          <PrivateRoute>
+            <Login></Login>
+          </PrivateRoute>
+        )
       }
     ]
   }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -79,7 +79,7 @@ const Register = () => {
                             />
                         </div>
 
-                        <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
+                        <div className="mb-12 md:mb-0 w-full md:w-8/12 lg:w-5/12 xl:w-5/12">
                             <form>
                                 <div className="mb-4">
                                     <label className="block text-sm font-medium mb-1" htmlFor="username">Username</label>
@@ -166,6 +166,8 @@ const Register = () => {
 
 
                             </form>
+
+                            <h1 className='font-bold text-lg mt-4'>Already have an account? <span className='text-[#9FE88D]'><Link to={'/login'}>Login</Link></span></h1>
                         </div>
                     </div>
                 </div>
