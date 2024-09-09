@@ -3,6 +3,7 @@ import { isAuthenticated } from "../utils/authCheck";
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { IoLogOut } from "react-icons/io5";
 const Header = () => {
     const is_Authenticated = isAuthenticated();
     const navigate = useNavigate();
@@ -19,10 +20,10 @@ const Header = () => {
         localStorage.removeItem('task_manager_user_account');
         
         setTimeout(() => {
-            toast.success('Logged Out Successfully');
-        }, 3000);
-
+            toast.info('Logged Out Successfully');
+        }, 500);
         navigate('/login');
+
        
     };
     return (
@@ -46,21 +47,21 @@ const Header = () => {
                         </div>
                         <ul
                             tabIndex={0}
-                            className="bg-[#9FE88D] menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow text-black text-l font-semibold">
+                            className="bg-[#9FE88D] menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-40 p-2 shadow text-black sm:text-sm  ">
                             <li><Link to={'/tasks'}>My Tasks</Link></li>
                         </ul>
                     </div>
-                    <Link to={'/'} className="btn btn-ghost text-xl">Task Manager</Link>
+                    <Link to={'/'} className="btn btn-ghost text-lg md:text-xl">Taskly</Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
-                        <li><Link to={'/tasks'}>My Tasks</Link></li>
+                        <li className="bg-[#9FE88D] text-gray-900 font-semibold rounded"><Link to={'/tasks'}>My Tasks</Link></li>
                     </ul>
                 </div>
                 <div className="navbar-end">
                     {
-                        !is_Authenticated ? <Link to={'/register'} className="btn btn-ghost bg-[#9FE88D] font-bold text-black">Register</Link> :
-                            <button onClick={handleLogout} type="submit" className="btn btn-ghost bg-[#9FE88D] font-bold text-black">Logout</button>
+                        !is_Authenticated ? <Link to={'/register'} className="btn btn-ghost  font-bold ">Register</Link> :
+                            <button onClick={handleLogout} type="submit" className="btn btn-ghost hover:bg-[#9FE88D] hover:text-gray-900"><IoLogOut className="text-2xl" /></button>
                     }
                 </div>
             </div>
