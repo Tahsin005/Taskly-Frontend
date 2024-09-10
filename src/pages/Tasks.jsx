@@ -18,7 +18,7 @@ const Tasks = () => {
             return;
         }
 
-        fetch('http://127.0.0.1:8000/api/tasks/', {
+        fetch('https://taskly-waa8.onrender.com/api/tasks/', {
             method: 'GET',
             headers: {
                 'Authorization': `Token ${token}`,

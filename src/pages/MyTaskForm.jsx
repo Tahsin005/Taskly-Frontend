@@ -1,4 +1,6 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
+
 
 const MyTaskForm = ({ fetchTasks, isLoading }) => {
     const [newTask, setNewTask] = useState({
@@ -16,16 +18,13 @@ const MyTaskForm = ({ fetchTasks, isLoading }) => {
 
     const postTasks = () => {
         const token = localStorage.getItem('task_manager_token');
-        if (token) {
-            console.log(token);
-        }
-
+      
         if (!token) {
             console.log('No token found!');
             return;
         }
 
-        fetch('http://127.0.0.1:8000/api/tasks/', {
+        fetch('https://taskly-waa8.onrender.com/api/tasks/', {
             method: 'POST',
             headers: {
                 'Authorization': `Token ${token}`,
@@ -53,6 +52,7 @@ const MyTaskForm = ({ fetchTasks, isLoading }) => {
     return (
         <>
             <div className="mt-12">
+                <h1 className="text-center font-semibold text-xl md:text-4xl">Hello <span className='text-[#9FE88D]'>{localStorage.getItem("task_manager_username") ? localStorage.getItem("task_manager_username") : 'user'}</span>..</h1>
                 <h1 className="text-center font-semibold text-xl md:text-4xl">Add your tasks here..</h1>
             </div>
             <div className="pt-12">
@@ -83,5 +83,10 @@ const MyTaskForm = ({ fetchTasks, isLoading }) => {
         </>
     );
 };
+
+MyTaskForm.propTypes = {
+    isLoading: PropTypes.func.isRequired,
+    fetchTasks: PropTypes.func.isRequired,
+}
 
 export default MyTaskForm;

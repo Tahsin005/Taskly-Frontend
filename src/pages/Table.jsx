@@ -3,6 +3,8 @@ import { FaEdit } from "react-icons/fa";
 import PropTypes from 'prop-types';
 import axios from "axios";
 import { useState } from "react";
+import { Spinner } from "@material-tailwind/react";
+
 
 const Table = ({ tasks, setTasks, isLoading }) => {
     const [editText, setEditText] = useState({
@@ -18,7 +20,7 @@ const Table = ({ tasks, setTasks, isLoading }) => {
                 return;
             }
 
-            await axios.delete(`http://127.0.0.1:8000/api/tasks/${id}/`, {
+            await axios.delete(`https://taskly-waa8.onrender.com/api/tasks/${id}/`, {
                 headers: {
                     'Authorization': `Token ${token}`,
                 }
@@ -39,7 +41,7 @@ const Table = ({ tasks, setTasks, isLoading }) => {
                 return;
             }
 
-            const response = await axios.patch(`http://127.0.0.1:8000/api/tasks/${id}/`, value, {
+            const response = await axios.patch(`https://taskly-waa8.onrender.com/api/tasks/${id}/`, value, {
                 headers: {
                     'Authorization': `Token ${token}`,
                     'Content-Type': 'application/json',
@@ -87,7 +89,9 @@ const Table = ({ tasks, setTasks, isLoading }) => {
                     </thead>
                     <tbody>
                         {
-                            isLoading ? <div>Loading...</div> :
+                            isLoading ? <div className="fixed inset-0 flex items-center justify-center bg-[#2A303C] z-50">
+                                <Spinner className="h-12 w-12 text-[#9FE88D]" />
+                            </div> :
                                 <>
                                     {
                                         tasks.map((task, index) => {
@@ -143,5 +147,9 @@ const Table = ({ tasks, setTasks, isLoading }) => {
 
     );
 };
-
+Table.propTypes = {
+    tasks: PropTypes.array.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    setTasks: PropTypes.func.isRequired,
+};
 export default Table;

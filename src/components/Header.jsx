@@ -18,6 +18,7 @@ const Header = () => {
         localStorage.removeItem('task_manager_token');
         localStorage.removeItem('task_manager_user_id');
         localStorage.removeItem('task_manager_user_account');
+        localStorage.removeItem('task_manager_username');
         
         setTimeout(() => {
             toast.info('Logged Out Successfully');
