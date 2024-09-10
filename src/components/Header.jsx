@@ -29,10 +29,10 @@ const Header = () => {
     };
     return (
         <div className="max-w-screen-xl mx-auto ">
-            <div className="navbar bg-base-100">
+            <div className="navbar bg-[#9FE88D] rounded-full">
                 <div className="navbar-start">
                     <div className="dropdown ">
-                        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+                        <div tabIndex={0} role="button" className="btn btn-ghost text-gray-900 lg:hidden">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="h-5 w-5"
@@ -48,21 +48,21 @@ const Header = () => {
                         </div>
                         <ul
                             tabIndex={0}
-                            className="bg-[#9FE88D] menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-40 p-2 shadow text-black sm:text-sm  ">
+                            className=" menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-40 p-2 shadow bg-[#9FE88D] text-gray-900 sm:text-sm font-semibold ">
                             <li><Link to={'/tasks'}>My Tasks</Link></li>
                         </ul>
                     </div>
-                    <Link to={'/'} className="btn btn-ghost text-lg md:text-xl">Taskly</Link>
+                    <Link to={'/'} className="btn btn-ghost text-gray-900 text-lg md:text-xl font-semibold">Taskly</Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
-                        <li className="bg-[#9FE88D] text-gray-900 font-semibold rounded"><Link to={'/tasks'}>My Tasks</Link></li>
+                        <li className="text-gray-900  font-semibold"><Link to={'/tasks'}>My Tasks</Link></li>
                     </ul>
                 </div>
                 <div className="navbar-end">
                     {
-                        !is_Authenticated ? <Link to={'/register'} className="btn btn-ghost  font-bold ">Register</Link> :
-                            <button onClick={handleLogout} type="submit" className="btn btn-ghost hover:bg-[#9FE88D] hover:text-gray-900"><IoLogOut className="text-2xl" /></button>
+                        !is_Authenticated ? <Link to={'/register'} className="btn text-[#9FE88D]   bg-[#2A303C] rounded-full">Register</Link> :
+                            <button onClick={handleLogout} type="submit" className="btn text-[#9FE88D]  bg-[#2A303C] rounded-full">Logout</button>
                     }
                 </div>
             </div>

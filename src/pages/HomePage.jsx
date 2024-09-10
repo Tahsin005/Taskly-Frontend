@@ -1,10 +1,9 @@
+import Hero from "./Hero";
 
-const HomePage = () => {
-    return (
-        <div className="h-screen">
-            <h1 className='text-center text-xl md:text-4xl'>This is home page</h1>
-        </div>
-    );
-};
+const HomePage = () => (
+    <div className="">
+        <Hero />
+    </div>
+);
 
 export default HomePage;
