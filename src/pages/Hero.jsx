@@ -6,6 +6,7 @@ import icon1 from "../assets/images/little_icon_man.png";
 import icon2 from '../assets/images/liitle_icon_man_2.png'
 import blurr from '../assets/images/ellips_1.png'
 import { Link } from 'react-router-dom';
+
 const Hero = () => {
     return (
         <div className='mb-12'>
@@ -31,7 +32,7 @@ const Hero = () => {
                         <img src={gbook} className="w-full mx-auto sm:w-10/12  lg:w-full" />
                     </div>
                 </section>
-                <div className='flex justify-evenly bg-[#9FE88D] text-gray-900 rounded-sm h-20 text-lg md:text-xl font-bold items-center'>
+                <div className='flex flex-col md:flex-row justify-evenly bg-[#9FE88D] text-gray-900 rounded-sm h-20 text-md md:text-lg font-bold items-center'>
                     <p>Create Account</p>
                     <p>Add Task</p>
                     <p>Save Automatically</p>
