@@ -1,5 +1,6 @@
 import { Spinner } from '@material-tailwind/react';
 import { useState } from 'react';
+import { Mosaic } from 'react-loading-indicators';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,14 +13,14 @@ const Login = () => {
 
     const handleLogin = (event) => {
         event.preventDefault();
-    
+
         if (!username || !password) {
             toast.error("Please fill in both username and password.");
             return;
         }
-    
-        setIsloading(true); 
-    
+
+        setIsloading(true);
+
         fetch("https://taskly-waa8.onrender.com/user/login/", {
             method: "POST",
             headers: {
@@ -33,7 +34,7 @@ const Login = () => {
                     localStorage.setItem("task_manager_token", data.token);
                     localStorage.setItem("task_manager_user_id", data.user_id);
                     const user_id = data.user_id;
-    
+
                     fetch(`https://taskly-waa8.onrender.com/user/account/?user_id=${user_id}`)
                         .then((res) => res.json())
                         .then((value) => {
@@ -43,52 +44,52 @@ const Login = () => {
                                     ID = element.id;
                                 }
                             });
-    
+
                             if (data && value && ID) {
                                 localStorage.setItem("task_manager_user_account", ID);
                                 localStorage.setItem("task_manager_username", username);
                                 setIsloading(false);
-                                
+
                                 toast.success('Logged in successfully');
-                                
+
                                 setTimeout(() => {
                                     navigate('/');
-                                }, 2000); 
+                                }, 2000);
                             }
                         })
                         .catch((err) => {
                             console.error("Error fetching account details:", err);
                             toast.error("Failed to retrieve user account details.");
-                            setIsloading(false); 
+                            setIsloading(false);
                         });
                 } else {
                     toast.error("Invalid username or password.");
-                    setIsloading(false); 
+                    setIsloading(false);
                 }
             })
             .catch((error) => {
                 console.error("Error during login:", error);
                 toast.error("An error occurred while logging in. Please try again later.");
-                setIsloading(false); 
+                setIsloading(false);
             });
     };
-    
+
 
     return (
         <>
             <ToastContainer />
             {isLoading ? (
-                <div className="flex justify-center items-center h-screen">
-                    <Spinner className="h-12 w-12 text-[#9FE88D]" />
+                <div className="flex items-center justify-center h-screen">
+                    <Mosaic color="#9FE88D" size="medium" text="" textColor="" />
                 </div>
             ) : (
                 <>
-                    <h1 className='text-center text-4xl mt-12 font-semibold'>Login</h1>
+                    <h1 className='mt-12 text-4xl font-semibold text-center'>Login</h1>
 
-                    <section className="mt-12 min-h-screen flex align-top justify-center">
+                    <section className="flex justify-center min-h-screen mt-12 align-top">
                         <div className="h-full">
-                            <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
-                                <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
+                            <div className="flex flex-wrap items-center justify-center h-full g-6 lg:justify-between">
+                                <div className="mb-12 shrink-1 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
                                     <img
                                         src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
                                         className="w-full"
@@ -96,28 +97,28 @@ const Login = () => {
                                     />
                                 </div>
 
-                                <div className="mb-12 md:mb-0 w-full md:w-8/12 lg:w-5/12 xl:w-5/12">
+                                <div className="w-full mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
                                     <form>
                                         <div className="mb-4">
-                                            <label className="block text-sm font-medium mb-1" htmlFor="username">Username</label>
+                                            <label className="block mb-1 text-sm font-medium" htmlFor="username">Username</label>
 
                                             <input
                                                 type="text"
                                                 id="username-login"
                                                 value={username}
                                                 onChange={(e) => setUsername(e.target.value)}
-                                                className="mt-1 p-2 w-full input input-bordered"
+                                                className="w-full p-2 mt-1 input input-bordered"
                                                 placeholder="Enter your username"
                                             />
                                         </div>
                                         <div className="mb-4">
-                                            <label className="block text-sm font-medium mb-1" htmlFor="password">Password</label>
+                                            <label className="block mb-1 text-sm font-medium" htmlFor="password">Password</label>
                                             <input
                                                 type="password"
                                                 id="password-login"
                                                 value={password}
                                                 onChange={(e) => setPassword(e.target.value)}
-                                                className="mt-1 p-2 w-full input input-bordered"
+                                                className="w-full p-2 mt-1 input input-bordered"
                                                 placeholder="Enter your password"
                                             />
                                         </div>
@@ -128,7 +129,7 @@ const Login = () => {
                                             Login
                                         </button>
                                     </form>
-                                    <h1 className='font-bold text-lg mt-4'>Don`t have an account? <span className='text-[#9FE88D]'><Link to={'/register'}>Register</Link></span></h1>
+                                    <h1 className='mt-4 text-lg font-bold'>Don`t have an account? <span className='text-[#9FE88D]'><Link to={'/register'}>Register</Link></span></h1>
                                 </div>
                             </div>
                         </div>

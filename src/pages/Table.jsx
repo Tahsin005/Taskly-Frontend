@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import axios from "axios";
 import { useState } from "react";
 import { Spinner } from "@material-tailwind/react";
+import { Mosaic } from "react-loading-indicators";
 
 
 const Table = ({ tasks, setTasks, isLoading }) => {
@@ -77,7 +78,7 @@ const Table = ({ tasks, setTasks, isLoading }) => {
 
     return (
         <div className="flex justify-center w-full">
-            <div className="py-12 w-full">
+            <div className="w-full py-12">
                 <table className="w-full">
                     <thead className="border-b-2 border-black">
                         <tr>
@@ -90,7 +91,7 @@ const Table = ({ tasks, setTasks, isLoading }) => {
                     <tbody>
                         {
                             isLoading ? <div className="fixed inset-0 flex items-center justify-center bg-[#2A303C] z-50">
-                                <Spinner className="h-12 w-12 text-[#9FE88D]" />
+                                <Mosaic color="#9FE88D" size="medium" text="" textColor="" />
                             </div> :
                                 <>
                                     {
@@ -100,7 +101,7 @@ const Table = ({ tasks, setTasks, isLoading }) => {
                                                     <td className="p-3 text-lg">{task.title}</td>
                                                     <td className="p-3 text-lg">{task.description}</td>
                                                     <td className="p-3 text-lg">{new Date(task.created_at).toLocaleString()}</td>
-                                                    <td className="p-3 text-lg flex justify-start gap-x-8">
+                                                    <td className="flex justify-start p-3 text-lg gap-x-8">
                                                         <FaEdit onClick={() => {
                                                             document.getElementById('my_modal_1').showModal();
                                                             setEditText(task);
@@ -119,18 +120,18 @@ const Table = ({ tasks, setTasks, isLoading }) => {
                 {/* Modal */}
                 <dialog id="my_modal_1" className="modal">
                     <div className="modal-box">
-                        <h3 className="font-bold text-lg mb-4">Edit To Do!</h3>
+                        <h3 className="mb-4 text-lg font-bold">Edit To Do!</h3>
                         <input
                             type="text"
                             name="title"
-                            className="mt-1 p-2 w-full input input-bordered"
+                            className="w-full p-2 mt-1 input input-bordered"
                             value={editText.title}
                             onChange={handleChange}
                         />
                         <input
                             type="text"
                             name="description"
-                            className="mt-4 p-2 w-full input input-bordered"
+                            className="w-full p-2 mt-4 input input-bordered"
                             value={editText.description}
                             onChange={handleChange}
                         />
